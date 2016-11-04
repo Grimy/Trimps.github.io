@@ -203,6 +203,8 @@ var toReturn = {
 				secondary: true,
 				exotic: true,
 				helium: true,
+				void: true,
+				bones: true,
 				essence: true,
 				events: true
 			},
@@ -3294,7 +3296,7 @@ var toReturn = {
 			health: 2,
 			fast: false,
 			loot: function () {
-				message("Your Trimps managed to pull 1 perfectly preserved bone from that Skeletimp!", "Loot", "italic", null, "secondary");
+				message("Your Trimps managed to pull 1 perfectly preserved bone from that Skeletimp!", "Loot", "italic", null, "bones");
 				game.global.b++;
 				game.global.lastSkeletimp = new Date().getTime();
 				updateSkeleBtn();
@@ -3308,7 +3310,7 @@ var toReturn = {
 			health: 2.5,
 			fast: false,
 			loot: function () {
-				message("That was a pretty big Skeletimp. Your Trimps scavenged the remains and found 2 perfectly preserved bones!", "Loot", "italic", null, "secondary");
+				message("That was a pretty big Skeletimp. Your Trimps scavenged the remains and found 2 perfectly preserved bones!", "Loot", "italic", null, "bones");
 				game.global.b += 2;
 				game.global.lastSkeletimp  = new Date().getTime();
 				updateSkeleBtn();
@@ -3474,7 +3476,7 @@ var toReturn = {
 				game.global.autoStorageAvailable = true;
 				document.getElementById("autoStorageBtn").style.display = "block";
 				createHeirloom();
-				message("You found an Heirloom!", "Loot", "*archive", null, "secondary");
+				message("You found an Heirloom!", "Loot", "*archive", null, "void");
 			}	
 		},
 		Heirloom: {
@@ -3487,7 +3489,7 @@ var toReturn = {
 			fire: function () {
 				createHeirloom();
 				if (game.global.world >= 60 && game.global.voidDeaths == 0 && game.global.voidBuff == "bleed") giveSingleAchieve(13);
-				message("You found an Heirloom!", "Loot", "*archive", null, "secondary");
+				message("You found an Heirloom!", "Loot", "*archive", null, "void");
 			}
 		},
 		Keys: {
@@ -5268,7 +5270,7 @@ var toReturn = {
 				}
 			},
 			fire: function () {
-				message("You just made a map to the Dimension of Anger! Should be fun!", "Notices");
+				message("You just made a map to the Dimension of Anger! Should be fun!", "Story");
 				createMap(20, "Dimension of Anger", "Hell", 3, 100, 2.5, true, true); 
 			}
 		},		

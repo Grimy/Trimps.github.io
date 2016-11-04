@@ -682,11 +682,11 @@ function messageConfigHover(what, event){
 			title = "Primary";
 			break;
 		case 'Lootsecondary':
-			text = "Log the less common loot items: Gems, Fragments, Territory Bonus, and others.";
+			text = "Log the less common loot items: Gems, Fragments, and Territory Bonus.";
 			title = "Secondary";
 			break;
 		case 'Lootevents':
-			text = "Log drops and messages from temporary events, such as holidays.";
+			text = "Log drops and messages from special events, such as holidays.";
 			title = "Events";
 			break;
 		case 'Lootexotic':
@@ -696,6 +696,14 @@ function messageConfigHover(what, event){
 		case 'Loothelium':
 			text = "Log Helium rewards.";
 			title = "Helium";
+			break;
+		case 'Lootbones':
+			text = "Log Bone rewards.";
+			title = "Bones";
+			break;
+		case 'Lootvoid':
+			text = "Log Void Maps and heirlooms drops.";
+			title = "Void";
 			break;
 		case 'Unlocksrepeated':
 			text = "Log all unlocks that drop more than once per run, such as Speedfarming or Coordination.";

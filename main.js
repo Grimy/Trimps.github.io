@@ -2817,7 +2817,7 @@ function createVoidMap() {
 		voidBuff: voidSpecials[prefixNum]
 	});
 	game.global.totalVoidMaps++;
-	message("A chill runs down your spine, and the bad guy quickly frosts over. A purple glow radiates from the ground in front of you, and a Void Map appears.", "Loot", "th-large", "voidMessage", 'secondary');
+	message("A chill runs down your spine, and the bad guy quickly frosts over. A purple glow radiates from the ground in front of you, and a Void Map appears.", "Loot", "th-large", "voidMessage", 'void');
 	addVoidAlert();
 	unlockMap(game.global.mapsOwnedArray.length - 1);
 }
@@ -4112,7 +4112,7 @@ function recycleBelow(confirmed){
 			total++;
 			}
 	}
-	if (total > 0) message("Recycled " + total + " maps for " + prettify(refund) + " fragments.", "Notices");
+	if (total > 0) message("Recycled " + total + " maps for " + prettify(refund) + " fragments.", "Loot", "th", null, "secondary");
 }
 
 function recycleMap(map, fromMass, killVoid) {
@@ -4147,7 +4147,7 @@ function recycleMap(map, fromMass, killVoid) {
 	if (!killVoid) {
 		refund = getRecycleValue(mapObj.level);
 		game.resources.fragments.owned += refund;
-		if (!fromMass) message("Recycled " + mapObj.name + " for " + prettify(refund) + " fragments.", "Notices");
+		if (!fromMass) message("Recycled " + mapObj.name + " for " + prettify(refund) + " fragments.", "Loot", "th", null, "secondary");
 	}
 	game.global.mapsOwnedArray.splice(map, 1);
     if (killVoid) {
@@ -7368,7 +7368,7 @@ function activateTurkimpPowers() {
 	"Ah, Turkimp. Nature's version of a Chickimp with a weirder head. Sure is tasty! You eat your fill and save some for later."
 	];
 	var roll = Math.floor(Math.random() * possibilities.length);
-	message(possibilities[roll], "Loot", "*spoon-knife", "turkimp", "secondary");
+	message(possibilities[roll], "Loot", "*spoon-knife", "turkimp", "events");
 	
 }
 
