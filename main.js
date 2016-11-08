@@ -727,7 +727,7 @@ function portalClicked() {
 	game.global.viewingUpgrades = false;
 	game.global.respecActive = false;
 	game.global.tempHighHelium = game.resources.helium.owned;
-	game.resources.helium.respecMax = game.resources.helium.owned + game.global.heliumLeftover;
+	game.resources.helium.respecMax = game.global.totalHeliumEarned - countHeliumSpent();
 	document.getElementById("wrapper").style.display = "none";
 	var bgColor = "";
 	if (game.global.sLevel == 1) bgColor = "#00b386";
@@ -927,7 +927,7 @@ function viewPortalUpgrades() {
 	if (game.global.totalPortals == 0) return;
 	cancelTooltip();
 	game.global.viewingUpgrades = true;
-	game.resources.helium.respecMax = game.global.heliumLeftover;
+	game.resources.helium.respecMax = game.global.totalHeliumEarned - countHeliumSpent() - game.resources.helium.owned;
 	document.getElementById("viewChallenge").style.display = "block";
 	var challengeText = "";
 	if (game.global.challengeActive){
@@ -1431,7 +1431,6 @@ function commitPortalUpgrades(usingPortal){
 		
 	} 
 	if (game.global.respecActive || game.global.viewingUpgrades){
-		game.global.heliumLeftover = game.resources.helium.maxRespec - game.resources.helium.totalSpentTemp;
 		game.resources.helium.totalSpentTemp = 0;
 		return true;
 	}
