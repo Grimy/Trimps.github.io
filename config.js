@@ -2212,7 +2212,7 @@ var toReturn = {
 			highest: 0,
 			title: "Trimps Owned",
 			description: function (number) {
-				return "Have  " + prettify(this.breakpoints[number]) + " total Trimps";
+				return "Have " + prettify(this.breakpoints[number]) + " total Trimps";
 			},
 			progress: function () {
 				if (this.breakpoints.length > this.finished) return prettify(Math.floor(this.highest)) + " / " + prettify(this.breakpoints[this.finished]);
@@ -2229,7 +2229,7 @@ var toReturn = {
 			title: "Real Estate",
 			description: function (number) {
 				if (number == 9) return "Use the Dimensional Generator";
-				return "Build your first  " + this.breakpoints[number];
+				return "Build your first " + this.breakpoints[number];
 			},
 			breakpoints: ["Hut", "House", "Mansion", "Hotel", "Resort", "Gateway", "Wormhole", "Collector", "Warpstation", "Generator"],
 			tiers: [1, 1, 1, 1, 2, 2, 2, 2, 3, 5],
@@ -2241,8 +2241,7 @@ var toReturn = {
 			finished: 0,
 			title: "Total Portals",
 			description: function (number) {
-				var s = (number > 0) ? "s" : "";
-				return "Use the Portal " + prettify(this.breakpoints[number]) + " time" + s;
+				return "Use the Portal " + (times == 1 ? "once" : times + " times");
 			},
 			display: function () {
 				return (game.global.totalPortals > 0);
@@ -2262,7 +2261,7 @@ var toReturn = {
 			finished: 0,
 			title: "Total Zone Clears",
 			description: function (number) {
-				return "Clear  " + prettify(this.breakpoints[number]) + " total Zones";
+				return "Clear " + prettify(this.breakpoints[number]) + " total Zones";
 			},
 			evaluate: function () {
 				return game.stats.zonesCleared.value + game.stats.zonesCleared.valueTotal;
@@ -2281,7 +2280,7 @@ var toReturn = {
 			finished: 0,
 			title: "Total Map Clears",
 			description: function (number) {
-				return "Clear  " + prettify(this.breakpoints[number]) + " total Maps";
+				return "Clear " + prettify(this.breakpoints[number]) + " total Maps";
 			},
 			display: function () {
 				return (this.evaluate() > 0);
@@ -2325,9 +2324,7 @@ var toReturn = {
 			finished: 0,
 			title: "Heirloom Collection",
 			description: function (number) {
-				var number = this.breakpoints[number];
-				var s = (number > 1) ? "s" : "";
-				return "Collect " + prettify(number) + " Heirloom" + s;
+				return "Collect " + s(this.breakpoints[number], "Heirloom");
 			},
 			progress: function () {
 				if (this.breakpoints.length > this.finished) return prettify(this.evaluate()) + " / " + prettify(this.breakpoints[this.finished]);
@@ -2349,9 +2346,7 @@ var toReturn = {
 			finished: 0,
 			title: "Gem Collection",
 			description: function (number) {
-				var number = this.breakpoints[number];
-				var s = (number > 1) ? "s" : "";
-				return "Collect  " + prettify(number) + " Gem" + s;
+				return "Collect " + s(this.breakpoints[number], "Gem");
 			},
 			progress: function () {
 				if (this.breakpoints.length > this.finished) return prettify(this.evaluate()) + " / " + prettify(this.breakpoints[this.finished]);
@@ -3344,7 +3339,7 @@ var toReturn = {
 			fast: true,
 			loot: function (level) {
 				var amt = rewardResource("gems", 0.3, level, true);
-				message("That Slagimp fell over, and " + prettify(amt) + " gems popped out! How about that?!", "Loot", "*diamond", null, 'secondary');
+				message("That Slagimp fell over, and " + s(amt, "gem") + "popped out! How about that?!", "Loot", "*diamond", null, 'secondary');
 			}
 		},
 		Moltimp: {
@@ -3354,7 +3349,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("metal", 0.2, level, true);
-				message("The Moltimp thanked you for the combat, and handed you " + prettify(amt) + " bars of metal! Then he died.", "Loot", "*cubes", null, 'primary');
+				message("The Moltimp thanked you for the combat, and handed you " + s(amt, "bar") + " of metal! Then he died.", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Golimp: {
@@ -3420,7 +3415,7 @@ var toReturn = {
 			fast: true,
 			loot: function (level) {
 				var amt = rewardResource("wood", 0.35, level, true);
-				message("The Entimp is no more. You manage to salvage " + prettify(amt) + " logs of wood from his trunk!", "Loot", "tree-deciduous", null, 'primary');
+				message("The Entimp is no more. You manage to salvage " + s(amt, "log") + " of wood from his trunk!", "Loot", "tree-deciduous", null, 'primary');
 			}
 		},
 		Squirrimp: {
@@ -3440,7 +3435,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("metal", 0.35, level, true);
-				message("You sift through the Gravelimp, and manage to find " + prettify(amt) + " bars of metal! Good on you!", "Loot", "*cubes", null, 'primary');
+				message("You sift through the Gravelimp, and manage to find " + s(amt, "bar") + " of metal! Good on you!", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Blimp: {
@@ -3550,7 +3545,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("gems", 0.35, level, false);
-				message("That Dragimp dropped " + prettify(amt) + " gems!", "Loot", "*diamond", null, 'secondary');
+				message("That Dragimp dropped " + s(amt, "gem") + "!", "Loot", "*diamond", null, 'secondary');
 			}
 		},
 		Mitschimp: {
@@ -3661,7 +3656,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("metal", .25, level, true);
-				message("Mechimp disengaged. Reward encountered: " + prettify(amt) + " bars of metal. Huzzah.", "Loot", "*cubes", null, 'primary');
+				message("Mechimp disengaged. Reward encountered: " + s(amt, "bar") + " of metal. Huzzah.", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Destructimp: {
@@ -3672,7 +3667,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("metal", .25, level, true);
-				message("Destructimp shorted out. Salvage results: " + prettify(amt) + " bars of metal. Acceptable.", "Loot", "*cubes", null, 'primary');
+				message("Destructimp shorted out. Salvage results: " + s(amt, "bar") + " of metal. Acceptable.", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Terminatimp: {
@@ -3683,7 +3678,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("metal", .25, level, true);
-				message("Terminatimp Terminated. Findings: " + prettify(amt) + " bars of metal. Hasta la Vista.", "Loot", "*cubes", null, 'primary');
+				message("Terminatimp Terminated. Findings: " + s(amt, "bar") + " of metal. Hasta la Vista.", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Autoimp: {
@@ -3694,7 +3689,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("metal", .5, level, true);
-				message("Autoimp force quit. Memory dump provides " + prettify(amt) + " bars of metal and no clues. It's a feature!", "Loot", "*cubes", null, 'primary');
+				message("Autoimp force quit. Memory dump provides " + s(amt, "bar") + " of metal and no clues. It's a feature!", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Artimp: {
@@ -3738,7 +3733,7 @@ var toReturn = {
 			fast: true,
 			loot: function (level) {
 				var amt = rewardResource("metal", .5, level, true);
-				message("The Fusimp explodes, leaving behind " + prettify(amt) + " bars of metal and a nice dose of radiation.", "Loot", "*cubes", null, 'primary');
+				message("The Fusimp explodes, leaving behind " + s(amt, "bar") + " of metal and a nice dose of radiation.", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Hydrogimp: {
@@ -3843,7 +3838,7 @@ var toReturn = {
 			fast: true,
 			loot: function (level) {
 				amt = rewardResource("metal", 5, level);
-				message("Radioactive waste spills to the ground as the Mutimp falls. You send a few Trimps to grab the shiny stuff in the toxic sludge, which ends up being " + prettify(amt) + " bars of metal!", "Loot", "*cubes", null, 'primary');
+				message("Radioactive waste spills to the ground as the Mutimp falls. You send a few Trimps to grab the shiny stuff in the toxic sludge, which ends up being " + s(amt, "bar") + " of metal!", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		Hulking_Mutimp: {
@@ -3854,7 +3849,7 @@ var toReturn = {
 			fast: true,
 			loot: function (level) {
 				amt = rewardResource("metal", 8, level);
-				message("Radioactive waste spills to the ground as the Hulking Mutimp falls. You send a few Trimps to grab the shiny stuff in the toxic sludge, which ends up being " + prettify(amt) + " bars of metal!", "Loot", "*cubes", null, 'primary');
+				message("Radioactive waste spills to the ground as the Hulking Mutimp falls. You send a few Trimps to grab the shiny stuff in the toxic sludge, which ends up being " + s(amt, "bar") + " of metal!", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		//Exotics
@@ -3868,7 +3863,7 @@ var toReturn = {
 			fast: false,
 			loot: function (level) {
 				var amt = rewardResource("gems", 3, level, true);
-				message("That Goblimp dropped " + prettify(amt) + " gems! What a bro!", "Loot", "*diamond", "exotic", 'exotic');
+				message("That Goblimp dropped " + s(amt, "gems") + "! What a bro!", "Loot", "*diamond", "exotic", 'exotic');
 				game.unlocks.impCount.Goblimp++;
 			}
 		},
@@ -3883,7 +3878,7 @@ var toReturn = {
 			loot: function (level) {
 				if (game.resources.gems.owned == 0) 	fadeIn("gems", 10);
 				var amt = rewardResource("gems", 7.5, level);
-				message("That Feyimp gave you " + prettify(amt) + " gems! Thanks Feyimp!", "Loot", "*diamond", "exotic", "exotic");
+				message("That Feyimp gave you " + s(amt, "gems") + "! Thanks Feyimp!", "Loot", "*diamond", "exotic", "exotic");
 				game.unlocks.impCount.Feyimp++;
 			}
 		},
@@ -3897,7 +3892,7 @@ var toReturn = {
 			dropDesc: "Drops Fragments",
 			loot: function (level) {
 				var amt = rewardResource("fragments", 1, level, true);
-				message("You stole " + prettify(amt) + " fragments from that Flutimp! It really didn't look like she needed them though, don't feel bad.", "Loot", "th", "exotic", "exotic");
+				message("You stole " + s(amt, "fragment") + " from that Flutimp! It really didn't look like she needed them though, don't feel bad.", "Loot", "th", "exotic", "exotic");
 				game.unlocks.impCount.Flutimp++;
 			}
 		},
@@ -3916,8 +3911,7 @@ var toReturn = {
 				game.unlocks.impCount.TauntimpAdded += amt;
 				if (game.portal.Carpentry.level) amt *= Math.pow((1 + game.portal.Carpentry.modifier), game.portal.Carpentry.level);
 				if (game.portal.Carpentry_II.level > 0) amt *= (1 + (game.portal.Carpentry_II.modifier * game.portal.Carpentry_II.level));
-				message("It's nice, warm, and roomy in that dead Tauntimp. It's big enough for " + prettify(amt) + " Trimps to live inside!", "Loot", "gift", "exotic", "exotic");
-
+				message("It's nice, warm, and roomy in that dead Tauntimp. It's big enough for " + s(amt, "Trimp") + " to live inside!", "Loot", "gift", "exotic", "exotic");
 			}
 		},
 		Whipimp: {
@@ -4063,7 +4057,7 @@ var toReturn = {
 			loot: function () {
 				message("That was a pretty big Skeletimp. Your Trimps scavenged the remains and found 2 perfectly preserved bones!", "Loot", "italic", null, "secondary");
 				game.global.b += 2;
-				game.global.lastSkeletimp  = new Date().getTime();
+				game.global.lastSkeletimp = new Date().getTime();
 				updateSkeleBtn();
 			}
 		}
@@ -4079,7 +4073,7 @@ var toReturn = {
 			"Muddy", "Dank", "Steamy", "Humid", "Dry", "Putrid", "Foul", "Dangerous", "Marred", "Blighted", "Crystal", "Frozen", "Simple", "Timeless"],
 			suffix: ["Creek.Sea", "Coast.Sea", "Swamp.Sea", "Forest.Forest", "Mountain.Mountain", "Beach.Sea", "Hill.Mountain", "Butte.Mountain",
 			"Ridge.Mountain", "Mesa.Mountain", "Valley.Depths", "Peak.Mountain", "Canyon.Depths", "Plateau.Mountain", "Crag.Depths",
-			"Crater.Depths", "Oaks.Forest",  "Volcano.Mountain", "Glacier.Sea",  "Brook.Sea", "Cave.Depths",  "Sea.Sea", "Ocean.Sea",
+			"Crater.Depths", "Oaks.Forest", "Volcano.Mountain", "Glacier.Sea", "Brook.Sea", "Cave.Depths", "Sea.Sea", "Ocean.Sea",
 			"Lake.Sea", "Jungle.Forest", "Island.Sea", "Ruins.Depths", "Temple.Depths", "Bog.Sea", "Grove.Forest", "Jungle.Forest",
 			"Thicket.Forest", "Woods.Forest", "Oasis.Forest", "Mineshaft.Depths", "Tunnel.Depths", "Depths.Depths", "Cavern.Depths",
 			"Gardens.Plentiful", "Gardens.Plentiful", "Gardens.Plentiful", "Gardens.Plentiful", "Gardens.Plentiful", "Gardens.Plentiful",
@@ -4802,7 +4796,7 @@ var toReturn = {
 			repeat: 5,
 			fire: function (level) {
 				var amt = rewardResource("gems", 0.5, level, true);
-				message("You found " + prettify(amt) + " gems! Terrific!", "Loot", "*diamond", null, "secondary");
+				message("You found " + s(amt, "gems") + "! Terrific!", "Loot", "*diamond", null, "secondary");
 			}
 		},
 		//This one is for depths maps
@@ -4815,7 +4809,7 @@ var toReturn = {
 			filter: true,
 			fire: function (level) {
 				var amt = rewardResource("gems", 0.5, level, true);
-				message("You found " + prettify(amt) + " gems! Terrific!", "Loot", "*diamond", null, "secondary");
+				message("You found " + s(amt, "gems") + "! Terrific!", "Loot", "*diamond", null, "secondary");
 			}
 		},
 		Any: {
@@ -4849,7 +4843,7 @@ var toReturn = {
 			filter: true,
 			fire: function (level) {
 				var amt = rewardResource("metal", 0.5, level, true);
-				message("You just found " + prettify(amt) + " bars of metal! Convenient!", "Loot", "*cubes", null, "primary");
+				message("You just found " + s(amt, "bar") + " of metal! Convenient!", "Loot", "*cubes", null, "primary");
 			}
 		},
 		Food: {
@@ -5373,7 +5367,7 @@ var toReturn = {
 			world: -1,
 			level: 99,
 			get icon (){
-				return (game.global.world == mutations.Magma.start() - 1) ?  "*archive2" : "book";
+				return (game.global.world == mutations.Magma.start() - 1) ? "*archive2" : "book";
 			},
 			title: "Coordination",
 			fire: function() {
@@ -5498,7 +5492,7 @@ var toReturn = {
 			repeat: 6,
 			fire: function (level) {
 				var amt = rewardResource("metal", 0.5, level);
-				message("You just found " + prettify(amt) + " bars of metal! Convenient!", "Loot", "*cubes", null, 'primary');
+				message("You just found " + s(amt, "bar") + " of metal! Convenient!", "Loot", "*cubes", null, 'primary');
 			}
 		},
 		spireMetals: {
@@ -5528,8 +5522,7 @@ var toReturn = {
 			craftTime: 5,
 			tooltip: function () {
 				var catchAmt = (game.portal.Bait.level + 1);
-				var s = (catchAmt > 1) ? "s" : "";
-				return "Each Trap allows you to catch " + prettify(catchAmt) + " thing" + s + ".";
+				return "Each Trap allows you to catch " + s(catchAmt, "thing") + ".";
 			},
 			cost: {
 				food: 10,

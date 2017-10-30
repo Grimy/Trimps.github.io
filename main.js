@@ -1461,8 +1461,7 @@ function checkOfflineProgress(noTip){
 						newMax = calcHeirloomBonus("Shield", "storageSize", newMax);
 						if (newMax > (resource.owned + amt)) break;
 					}
-					var s = (count > 1) ? "s" : "";
-					storageBought.push(count + " " + storages[x] + s + ", ");
+					storageBought.push(s(count, storages[x]) + ", ");
 				}
 			}
 		}
@@ -1568,8 +1567,7 @@ function activateClicked(){
 	if (game.global.challengeActive == "Daily") newText += "<span class='dailyError portalError'>You still have the Daily challenge active! If you portal right now, your reward will be applied at the beginning of your next run. Alternatively, click 'Finish Daily' in the World or inside 'View Perks' to get the bonus now.</span>";
 	if (game.global.runningChallengeSquared) newText += "<div class='squaredError portalError'>" + getSquaredDescriptionInRun(true) + "</div>";
 	if (game.global.heirloomsExtra.length){
-		var s = (game.global.heirloomsExtra.length > 1) ? "s" : "";
-		newText += "<div class='heirloomRecycleWarning portalError'>You have " + game.global.heirloomsExtra.length + " extra Heirloom" + s + ", which will be recycled for " + prettify(recycleAllExtraHeirlooms(true)) + " Nullifium if you portal now. Make sure you carry any that you want to save!</div>";
+		newText += "<div class='heirloomRecycleWarning portalError'>You have " + s(game.global.heirloomsExtra.length, "extra Heirloom") + ", which will be recycled for " + prettify(recycleAllExtraHeirlooms(true)) + " Nullifium if you portal now. Make sure you carry any that you want to save!</div>";
 	}
 	if (game.global.world >= 230 && canAffordGeneratorUpgrade()){
 		newText += "<div class='magmiteError portalError'>You have " + prettify(game.global.magmite) + " Magmite, which is enough purchase an upgrade for your Dimensional Generator! If you portal now, " + ((game.permanentGeneratorUpgrades.Shielding.owned) ? "20" : "30") + "% of your Magmite will decay.</div>";
@@ -3107,11 +3105,11 @@ function breed() {
 	totalTime = totalTime.toNumber();
 	breeding = breeding.toNumber();
 	timeRemaining = (game.options.menu.showFullBreed.enabled > 0) ? timeRemaining.toFixed(1) : Math.ceil(timeRemaining);
-	timeRemaining += " Secs";
+	timeRemaining = s(timeRemaining, "Sec");
 		//Display full breed time if desired
 	var totalTimeText = totalTime.toFixed(1);
 	if (game.options.menu.showFullBreed.enabled){
-		fullBreed = totalTimeText + " Secs";
+		fullBreed = s(totalTimeText, "Sec");
 		timeRemaining += " / " + fullBreed;
 	}
 
@@ -3484,7 +3482,7 @@ function buyMap() {
 		if (!game.global.currentMapId) selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id);
 		return 1;
 	}
-	else message("You can't afford this map! You need " + prettify(cost) + " fragments.", "Notices");
+	else message("You can't afford this map! You need " + s(cost, "fragment") + ".", "Notices");
 	return -3;
 }
 
@@ -3710,8 +3708,7 @@ function getNextCarriedCost(){
 }
 
 function displayAddCarriedBtn(){
-	var s = (game.global.maxCarriedHeirlooms > 1) ? "s" : "";
-	document.getElementById("carriedHeirloomsText").innerHTML = " - You can carry <b>" + game.global.maxCarriedHeirlooms + "</b> additional Heirloom" + s + " through the Portal.";
+	document.getElementById("carriedHeirloomsText").innerHTML = " - You can carry <b>" + s(game.global.maxCarriedHeirlooms, "</b>additional Heirloom") + " through the Portal.";
 	var elem = document.getElementById("addCarriedBtn");
 	if (game.global.maxCarriedHeirlooms > game.heirlooms.values.length){
 		elem.style.display = "none";
@@ -3757,8 +3754,7 @@ function displayExtraHeirlooms(){
 		tempHtml += generateHeirloomIcon(game.global.heirloomsExtra[y], "Extra", y);
 	}
 	document.getElementById("extraHeirloomsHere").innerHTML = tempHtml;
-	var s = (extraExtraText > 1) ? "s" : "";
-	document.getElementById("extraHeirloomsText").innerHTML = " - " + extraExtraText + " Heirloom" + s + ", recycled for " + recycleAllExtraHeirlooms(true) + " Nu on Portal";
+	document.getElementById("extraHeirloomsText").innerHTML = " - " + s(extraExtraText, "Heirloom") + ", recycled for " + recycleAllExtraHeirlooms(true) + " Nu on Portal";
 
 }
 
@@ -3812,8 +3808,7 @@ function recycleAllExtraHeirlooms(valueOnly){
 
 function recycleAllHeirloomsClicked(confirmed){
 	if (!confirmed){
-		var s = (game.global.heirloomsExtra.length == 1) ? "" : "s";
-		var messageString = "You have " + game.global.heirloomsExtra.length + " extra Heirloom" + s + ", which will be recycled for " + prettify(recycleAllExtraHeirlooms(true)) + " Nullifium. Are you sure?";
+		var messageString = "You have " + s(game.global.heirloomsExtra.length, "extra Heirloom") + ", which will be recycled for " + prettify(recycleAllExtraHeirlooms(true)) + " Nullifium. Are you sure?";
 		tooltip("confirm", null, "update", messageString, "recycleAllHeirloomsClicked(true)", "Recycle All Heirlooms");
 		return;
 	}
@@ -4143,7 +4138,7 @@ function replaceMod(confirmed){
 		if (oldName != "Empty"){
 			if (mod[3] > 0){
 				var cost = countPriceOfUpgrades(setupDummyHeirloom(heirloom, mod), mod[3]);
-				text += "<br/><br/><b>You have already purchased " + mod[3] + " upgrades for " + oldName + " and spent a total of " + prettify(cost) + " Nullifium. <span style='color:red'>Replacing this mod will not refund your Nu, and it will be permanently lost</span></b>.";
+				text += "<br/><br/><b>You have already purchased " + s(mod[3], "upgrade") + " for " + oldName + " and spent a total of " + prettify(cost) + " Nullifium. <span style='color:red'>Replacing this mod will not refund your Nu, and it will be permanently lost</span></b>.";
 			}
 		}
 		text += " Are you sure?";
@@ -6102,7 +6097,7 @@ function recycleBelow(confirmed){
 			total++;
 			}
 	}
-	if (total > 0) message("Recycled " + total + " maps for " + prettify(refund) + " fragments.", "Notices");
+	if (total > 0) message("Recycled " + total + " maps for " + s(refund, "fragment") + ".", "Notices");
 }
 
 function recycleMap(map, fromMass, killVoid) {
@@ -6137,7 +6132,7 @@ function recycleMap(map, fromMass, killVoid) {
 	if (!killVoid) {
 		refund = getRecycleValue(mapObj.level);
 		game.resources.fragments.owned += refund;
-		if (!fromMass) message("Recycled " + mapObj.name + " for " + prettify(refund) + " fragments.", "Notices");
+		if (!fromMass) message("Recycled " + mapObj.name + " for " + s(refund, "fragment") + ".", "Notices");
 	}
 	game.global.mapsOwnedArray.splice(map, 1);
     if (killVoid) {
@@ -6157,13 +6152,11 @@ function getRecycleValue(level) {
 }
 
 function updateMapCredits() {
-	var s = (game.challenges.Mapology.credits == 1) ? "" : "s"
-	document.getElementById("mapCreditsLeft").innerHTML = game.challenges.Mapology.credits + " Map Credit" + s;
+	document.getElementById("mapCreditsLeft").innerHTML = s(game.challenges.Mapology.credits, "Map Credit");
 }
 
 function messageMapCredits() {
-	var s = (game.challenges.Mapology.credits == 1) ? "" : "s"
-	message("You have " + game.challenges.Mapology.credits + " Map Credit" + s + " left!", "Notices");
+	message("You have " + s(game.challenges.Mapology.credits, "Map Credit") + " left!", "Notices");
 }
 
 function mapsClicked(confirmed) {
@@ -7616,9 +7609,8 @@ function deadInSpire(){
 		endSpire();
 		return;
 	}
-	var s = (game.global.spireDeaths > 1) ? "s" : "";
 	var has = (game.global.spireDeaths > 1) ? "have" : "has";
-	message(game.global.spireDeaths + " group" + s + " of Trimps " + has + " perished in the Spire.", "Notices");
+	message(s(game.global.spireDeaths, "group") + " of Trimps " + has + " perished in the Spire.", "Notices");
 }
 
 function endSpire(cancelEarly){
@@ -8359,7 +8351,7 @@ var dailyModifiers = {
 		},
 		empower: {
 			description: function (str) {
-				return "All enemies gain " + str + " stacks of Empower whenever your Trimps die in the World. Empower increases the attack and health of bad guys in the World by 0.2% per stack, can stack to 9999, and never resets.";
+				return "All enemies gain " + s(str, "stack") + " of Empower whenever your Trimps die in the World. Empower increases the attack and health of bad guys in the World by 0.2% per stack, can stack to 9999, and never resets.";
 			},
 			getWeight: function (str) {
 				return (str / 6) * 2;
@@ -8845,9 +8837,8 @@ function fight(makeUp) {
 				updateDailyStacks('empower');
 			}
 		}
-        var s = (game.resources.trimps.soldiers > 1) ? "s " : " ";
 		randomText = game.trimpDeathTexts[Math.floor(Math.random() * game.trimpDeathTexts.length)];
-        message(prettify(game.resources.trimps.soldiers) + " Trimp" + s + "just " + randomText + ".", "Combat", null, null, 'trimp');
+        message(s(game.resources.trimps.soldiers, "Trimp") + " just " + randomText + ".", "Combat", null, null, 'trimp');
 		if (game.global.spireActive && !game.global.mapsActive) deadInSpire();
         game.global.fighting = false;
         game.resources.trimps.soldiers = 0;
@@ -10295,8 +10286,7 @@ function formatMinutesForDescriptions(number){
 		text = hours + ":" + minutes;
 	}
 	else {
-		var s = (hours > 1) ? "s" : "";
-		text = hours + " hour" + s;
+		text = s(hours, "hour");
 	}
 	return text;
 }
@@ -10311,8 +10301,7 @@ function formatSecondsForDescriptions(number){
 		text = minutes + ":" + seconds;
 	}
 	else {
-		var s = (minutes > 1) ? "s" : "";
-		text = minutes + " min" + s;
+		text = s(minutes, "min");
 	}
 	return text;	
 }
@@ -10662,7 +10651,7 @@ function getCheapestPrestigeUpgrade(upgradeArray) {
 		if (!upgradeObj || upgradeObj.locked) continue;
 		var res = (typeof upgradeObj.cost.resources.metal !== 'undefined') ? 'metal' : 'wood';
 		var thisCost = upgradeObj.cost.resources[res];
-		if  (artMult != -1) thisCost *= artMult;
+		if (artMult != -1) thisCost *= artMult;
 		if (res == "wood" && upgradeArray.length > 1 && game.resources.wood.owned < thisCost)	continue;
 		else if (res == "wood") {
 			shieldCheck = true;
